@@ -1,4 +1,4 @@
 from .user import UserCreate, UserResponse
-from .movie import MovieInfoSchema
+from .movie import MovieSchema
 
-__all__ = ["UserCreate", "UserResponse", "MovieInfoSchema"]
+__all__ = ["UserCreate", "UserResponse", "MovieSchema"]
