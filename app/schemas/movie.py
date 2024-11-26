@@ -4,6 +4,26 @@ from pydantic import BaseModel, field_validator
 from typing import Optional, List
 from datetime import date, datetime
 
+class MovieSummarySchema(BaseModel):
+    id: int
+    title: str
+    poster_path: Optional[str] = None
+    vote_average: Optional[float] = None
+    director: Optional[str] = None
+    release_date: Optional[date] = None
+    
+    @field_validator('release_date', mode='before')
+    def parse_release_date(cls, value):
+        if value and isinstance(value, str):
+            try:
+                return datetime.strptime(value, "%Y-%m-%d").date()
+            except ValueError:
+                return None
+        return value
+
+    class Config:
+        from_attributes = True
+
 class MovieSchema(BaseModel):
     id: int
     title: str
