@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.crud.rating import add_or_update_rating, get_user_ratings, remove_rating
-from app.schemas.movie import MovieSchema
+from app.schemas.rating import RatingSchema
 from app.models.user import User
 from app.dependencies.auth import get_current_user
 
@@ -17,7 +17,7 @@ def rate_movie(movie_id: int, rating: int, review: str = None, db: Session = Dep
         raise HTTPException(status_code=400, detail="Rating must be between 1 and 5")
     return add_or_update_rating(db, current_user.id, movie_id, rating, review)
 
-@router.get("/", response_model=List[MovieSchema])
+@router.get("/", response_model=List[RatingSchema])
 def get_ratings(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     return get_user_ratings(db, current_user.id)
 

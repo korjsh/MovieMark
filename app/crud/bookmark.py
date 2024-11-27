@@ -20,7 +20,7 @@ def add_bookmark(db: Session, user_id: int, movie_id: int):
 
 def get_user_bookmarks(db: Session, user_id: int):
     # 북마크와 관련된 영화 데이터를 조인하여 가져오기
-    bookmarks = db.query(Bookmark).options(joinedload(Bookmark.movie)).filter(
+    return db.query(Bookmark).filter(
         Bookmark.user_id == user_id
     ).all()
 
