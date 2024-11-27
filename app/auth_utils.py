@@ -1,9 +1,12 @@
 import jwt
 import datetime
 from typing import Optional
+from dotenv import load_dotenv
+import os
 
-SECRET_KEY = "MOVIEMARK-1116"  # 보안상의 이유로 환경 변수로 관리하는 것이 좋음
-ALGORITHM = "HS256"
+load_dotenv()  # .env 파일 로드
+SECRET_KEY = os.getenv("SECRET_KEY") # 보안상의 이유로 환경 변수로 관리하는 것이 좋음
+ALGORITHM = os.getenv("ALGORITHM")
 
 def create_access_token(data: dict, expires_delta: Optional[datetime.timedelta] = None):
     to_encode = data.copy()

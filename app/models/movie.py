@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, Date, Text
 from ..database import Base
+from sqlalchemy.orm import relationship
 
 class Movie(Base):
     __tablename__ = "movies"
@@ -32,3 +33,5 @@ class Movie(Base):
     imdb_rating = Column(Float)  # IMDb 평점
     imdb_votes = Column(Float)  # IMDb 투표 수 (소수점 포함)
     poster_path = Column(String)  # 포스터 경로
+    bookmarks = relationship("Bookmark", back_populates="movie", cascade="all, delete-orphan")
+    ratings = relationship("Rating", back_populates="movie", cascade="all, delete-orphan")
