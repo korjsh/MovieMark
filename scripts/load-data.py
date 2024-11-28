@@ -6,7 +6,7 @@ import os
 csv_file = "scripts/data/TMDB_all_movies.csv"  # Replace with your file path
 
 # SQLite database path
-db_file = "test.db"  # Replace with your desired database file path
+db_file = "app/test.db"  # Replace with your desired database file path
 
 # Table name
 table_name = "movies"

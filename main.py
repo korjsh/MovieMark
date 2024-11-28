@@ -18,3 +18,8 @@ app.include_router(movie.router, prefix="/movies", tags=["Movies"])
 app.include_router(user.router, prefix="/users", tags=["Users"])
 app.include_router(bookmark.router, prefix="/bookmarks", tags=["Bookmarks"])
 app.include_router(rating.router, prefix="/ratings", tags=["Ratings"])
+
+if __name__ == "__main__":
+    print("Starting MovieMark API server...")
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
