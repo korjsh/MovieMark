@@ -7,6 +7,23 @@ from app.routers import auth, movie, user, bookmark, rating
 from app.database import engine
 from app.models import movie as movie_model, user as user_model, bookmark as bookmark_model, rating as rating_model
 
+
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+# BASE_DIR = Path(getattr(sys, '_MEIPASS', Path(__file__).parent))
+# ENV_FILE = BASE_DIR / ".env"
+
+# if ENV_FILE.exists():
+#     print(f"Loading environment variables from {ENV_FILE}")
+#     load_dotenv(ENV_FILE)
+#     print("Loaded environment variables:")
+#     for key, value in os.environ.items():
+#         print(f"{key}: {value}")
+# else:
+#     print("No .env file found!")
+
 logger = logging.getLogger("uvicorn.info")
 
 async def lifespan_handler(app: FastAPI) -> AsyncIterator[None]:

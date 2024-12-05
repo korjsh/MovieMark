@@ -5,11 +5,18 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import User
 import os
+from dotenv import load_dotenv
+from pathlib import Path
+import sys
 
 auth_scheme = HTTPBearer()
 
+BASE_DIR = Path(getattr(sys, '_MEIPASS', Path(__file__).parent))
+ENV_FILE = BASE_DIR / ".env"
+load_dotenv(ENV_FILE)
+
 SECRET_KEY = os.getenv("SECRET_KEY", "default_secret_key")
-ALGORITHM = os.getenv("ALGORITHM", "HS256")
+ALGOßRITHM = os.getenv("ALGORITHM", "HS256")
 
 def get_current_user(db: Session = Depends(get_db), token: HTTPAuthorizationCredentials = Depends(auth_scheme)):
     # Authorization 헤더에서 Bearer 토큰 추출

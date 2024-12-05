@@ -4,9 +4,13 @@ from typing import Optional
 from dotenv import load_dotenv
 import os
 import bcrypt
+from pathlib import Path
+import sys
 
-# 환경 변수 로드
-load_dotenv()
+BASE_DIR = Path(getattr(sys, '_MEIPASS', Path(__file__).parent))
+ENV_FILE = BASE_DIR / ".env"
+load_dotenv(ENV_FILE)
+
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
 
