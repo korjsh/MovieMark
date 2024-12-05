@@ -47,3 +47,4 @@ def get_current_user(db: Session = Depends(get_db), token: HTTPAuthorizationCred
         )
 
     return user
+

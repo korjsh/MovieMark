@@ -5,28 +5,43 @@ from app.schemas.user import UserCreate, UserResponse
 from app.database import get_db
 from app.auth_utils import create_access_token, create_refresh_token, verify_refresh_token, hash_password, verify_password
 import datetime
+from passlib.context import CryptContext
+
 
 router = APIRouter()
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 # 암호화 객체를 가져오기
 
 @router.post("/signup/", response_model=UserResponse)
 def signup(user: UserCreate, db: Session = Depends(get_db)):
+    print("user:", user)
     db_user = get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
+
+    # if db_user:
+    #     raise HTTPException(status_code=400, detail="Email already registered")
     
     # 비밀번호 해싱
-    hashed_password = hash_password(user.password)
-    user.password = hashed_password
+    # hashed_password = hash_password(user.password)
+    # user_data = user.dict()
+    # user_data["password"] = hashed_password
+    # new_user = create_user(db=db, user=UserCreate(**user_data))
     new_user = create_user(db=db, user=user)
+
     return new_user
 
 @router.post("/login/")
 def login(user: UserCreate, db: Session = Depends(get_db)):
+    print(f"Request payload: {user}")
     db_user = get_user_by_email(db, email=user.email)
-    if not db_user or not verify_password(user.password, db_user.hashed_password):
-        raise HTTPException(status_code=400, detail="Invalid credentials")
+    print(f"db_user: {db_user.email}")
+    if not db_user:
+        raise HTTPException(status_code=400, detail="User not found with this email.")
+    if not verify_password(user.password, db_user.hashed_password):
+        raise HTTPException(status_code=400, detail="Password does not match.")
 
     # Access Token 및 Refresh Token 생성
     access_token_expires = datetime.timedelta(minutes=15)

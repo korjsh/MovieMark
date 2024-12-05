@@ -3,10 +3,10 @@ import sqlite3
 import os
 
 # Combined CSV file path
-csv_file = "scripts/data/TMDB_all_movies.csv"  # Replace with your file path
+csv_file = "scripts/data/top_100_movies_titles.csv"  # Replace with your file path
 
 # SQLite database path
-db_file = "app/test.db"  # Replace with your desired database file path
+db_file = "dist/test.db"  # Replace with your desired database file path
 
 # Table name
 table_name = "movies"

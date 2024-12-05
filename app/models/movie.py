@@ -7,6 +7,7 @@ class Movie(Base):
 
     id = Column(Integer, primary_key=True)  # 영화 ID
     title = Column(String, nullable=False)  # 영화 제목
+    korean_title = Column(String, nullable=False)  # 영화 제목
     vote_average = Column(Float)  # 평균 평점
     vote_count = Column(Float)  # 평점 수 (소수점 포함)
     status = Column(String)  # 상영 상태

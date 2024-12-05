@@ -1,5 +1,3 @@
-# app/schemas/movie.py
-
 from pydantic import BaseModel, field_validator
 from typing import Optional, List
 from datetime import date, datetime
@@ -11,7 +9,9 @@ class MovieSummarySchema(BaseModel):
     vote_average: Optional[float] = None
     director: Optional[str] = None
     release_date: Optional[date] = None
-    
+    korean_title: Optional[str] = None
+    is_bookmarked: Optional[bool] = False  # 북마크 여부 추가
+
     @field_validator('release_date', mode='before')
     def parse_release_date(cls, value):
         if value and isinstance(value, str):
@@ -27,6 +27,7 @@ class MovieSummarySchema(BaseModel):
 class MovieSchema(BaseModel):
     id: int
     title: str
+    korean_title: Optional[str] = None
     vote_average: Optional[float] = None
     vote_count: Optional[float] = None
     status: Optional[str] = None
@@ -53,6 +54,7 @@ class MovieSchema(BaseModel):
     imdb_rating: Optional[float] = None
     imdb_votes: Optional[float] = None
     poster_path: Optional[str] = None
+    is_bookmarked: Optional[bool] = False  # 북마크 여부 추가
 
     @field_validator('release_date', mode='before')
     def parse_release_date(cls, value):
