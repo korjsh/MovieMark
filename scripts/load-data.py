@@ -2,11 +2,14 @@ import pandas as pd
 import sqlite3
 import os
 
-# Combined CSV file path
-csv_file = "scripts/data/top_100_movies_titles.csv"  # Replace with your file path
+print("Current working directory:", os.getcwd())
 
-# SQLite database path
-db_file = "dist/test.db"  # Replace with your desired database file path
+# Base directory of the script
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+# File paths
+csv_file = os.path.join(base_dir, "data", "top_100_movies_titles.csv")
+db_file = os.path.join(base_dir, "..", "dist", "test.db")  # Adjust as needed
 
 # Table name
 table_name = "movies"
@@ -21,7 +24,9 @@ conn = sqlite3.connect(db_file)
 data.to_sql(table_name, conn, if_exists="replace", index=False)
 
 # Confirm data insertion
-print(f"Data successfully inserted into the SQLite database: {db_file}, table: {table_name}")
+print(
+    f"Data successfully inserted into the SQLite database: {db_file}, table: {table_name}"
+)
 
 # Close the database connection
 conn.close()
