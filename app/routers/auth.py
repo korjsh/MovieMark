@@ -7,16 +7,12 @@ from app.auth_utils import create_access_token, create_refresh_token, verify_ref
 import datetime
 from passlib.context import CryptContext
 
-
 router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-
 # 암호화 객체를 가져오기
-
 @router.post("/signup/", response_model=UserResponse)
 def signup(user: UserCreate, db: Session = Depends(get_db)):
-    print("user:", user)
     db_user = get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -47,10 +43,10 @@ def login(user: UserCreate, db: Session = Depends(get_db)):
     access_token_expires = datetime.timedelta(minutes=15)
     refresh_token_expires = datetime.timedelta(days=7)
     access_token = create_access_token(
-        data={"sub": db_user.email}, expires_delta=access_token_expires
+        data={"id": db_user.id, "sub": db_user.email}, expires_delta=access_token_expires
     )
     refresh_token = create_refresh_token(
-        data={"sub": db_user.email}, expires_delta=refresh_token_expires
+        data={"id": db_user.id, "sub": db_user.email}, expires_delta=refresh_token_expires
     )
 
     return {"access_token": access_token, "refresh_token": refresh_token, "token_type": "bearer"}
@@ -76,4 +72,4 @@ def refresh_token(refresh_token: str, db: Session = Depends(get_db)):
         data={"sub": db_user.email}, expires_delta=access_token_expires
     )
 
-    return {"access_token": new_access_token, "token_type": "bearer"}
+    return {"access_token": new_access_token, "refresh_token": refresh_token, "token_type": "bearer"}
