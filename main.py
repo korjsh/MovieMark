@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware  # CORS를 위한 미들웨�
 from app.routers import auth, movie, user, bookmark, rating, db_manage
 from app.database import engine
 from app.models import movie as movie_model, user as user_model, bookmark as bookmark_model, rating as rating_model
+from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
+
 
 
 import os
@@ -38,6 +40,7 @@ async def lifespan_handler(app: FastAPI) -> AsyncIterator[None]:
     logger.info("Shutting down MovieMark API server...")
 
 app = FastAPI(lifespan=lifespan_handler)
+app.add_middleware(HTTPSRedirectMiddleware)
 
 # CORS 설정 추가
 origins = [
@@ -70,4 +73,4 @@ app.include_router(db_manage.router, prefix="/db_manage", tags=["DbManage"])
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8002, log_level="info")
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
