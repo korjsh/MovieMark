@@ -10,9 +10,11 @@ import sys
 BASE_DIR = Path(getattr(sys, '_MEIPASS', Path(__file__).parent))
 ENV_FILE = BASE_DIR / ".env"
 load_dotenv(ENV_FILE)
+print(f"ENV_FILE:{ENV_FILE}")
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
+# print(f"SECRET_KEY:{SECRET_KEY}, ALGORITHM:{ALGORITHM}")
 
 def create_access_token(data: dict, expires_delta: datetime.timedelta = datetime.timedelta(minutes=15)) -> str:
     to_encode = data.copy()
