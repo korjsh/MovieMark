@@ -8,9 +8,6 @@ router = APIRouter()
 BASE_DIR = Path(__file__).resolve().parents[2]  # 상위 두 단계로 이동하여 최상위 디렉토리 참조
 UPLOAD_DIR = BASE_DIR  # 업로드된 파일을 저장할 폴더 지정
 
-# 업로드 폴더가 없으면 생성
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-
 # 허용된 파일 확장자
 ALLOWED_EXTENSIONS = {".sqlite", ".db"}
 

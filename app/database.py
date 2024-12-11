@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from pathlib import Path
+
 import os
 import sys
 import logging
@@ -11,7 +13,8 @@ if getattr(sys, "frozen", False):  # 패키징된 상태인지 확인
     BASE_DIR = os.path.dirname(sys.executable)  # 실행 파일의 디렉토리
 else:
     print("dev server")
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    BASE_DIR = Path(__file__).resolve().parents[1]  # 상위 두 단계로 이동하여 최상위 디렉토리 참조
+
 SQLALCHEMY_DATABASE_URL = f"sqlite:///{os.path.join(BASE_DIR, 'test.db')}"
 print(f"Base Directory:{BASE_DIR}")
 print(f"Database Path:{SQLALCHEMY_DATABASE_URL}")
