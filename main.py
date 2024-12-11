@@ -3,7 +3,7 @@ from typing import AsyncIterator
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware  # CORS를 위한 미들웨어 추가
-from app.routers import auth, movie, user, bookmark, rating
+from app.routers import auth, movie, user, bookmark, rating, db_manage
 from app.database import engine
 from app.models import movie as movie_model, user as user_model, bookmark as bookmark_model, rating as rating_model
 
@@ -66,7 +66,8 @@ app.include_router(movie.router, prefix="/movies", tags=["Movies"])
 app.include_router(user.router, prefix="/users", tags=["Users"])
 app.include_router(bookmark.router, prefix="/bookmarks", tags=["Bookmarks"])
 app.include_router(rating.router, prefix="/ratings", tags=["Ratings"])
+app.include_router(db_manage.router, prefix="/db_manage", tags=["DbManage"])
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
+    uvicorn.run(app, host="0.0.0.0", port=8002, log_level="info")
