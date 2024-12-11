@@ -9,7 +9,7 @@ movies['popularity_score'] = movies['vote_average'] * movies['vote_count']  # �
 top_movies = movies.sort_values(by='popularity_score', ascending=False).head(100)  # 상위 100개 추출
 
 # 결과를 CSV로 저장 (모든 열 포함)
-output_file_path = 'top_100_movies_with_all_columns.csv'
+output_file_path = 'scripts/data/top_100_movies.csv'
 top_movies.to_csv(output_file_path, index=False, encoding='utf-8-sig')
 
 print(f"유명한 영화 100편이 모든 열과 함께 '{output_file_path}' 파일로 저장되었습니다.")

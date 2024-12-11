@@ -1,9 +1,19 @@
 import pandas as pd
 import requests
 import time
+from dotenv import load_dotenv
+from pathlib import Path
+import sys
+import os
+
+BASE_DIR = Path(getattr(sys, '_MEIPASS', Path(__file__).parent))
+ENV_FILE = BASE_DIR / ".env"
+load_dotenv("app/.env")
+print(f"ENV_FILE:{ENV_FILE}")
 
 # TMDB API 키 설정
-API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjOTI5NDZjMjE2NmFiMDhkY2UxMGYxM2U1NDhiZjdmMCIsIm5iZiI6MTYzNjgxODIzOC41MTQsInN1YiI6IjYxOGZkZDNlYTMxM2I4MDA4ZjU0MzQyMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1I5yZw5Nfx14FVpvo4N6uMqlAOkTq7-MoFM6fI2T52I'  # 여기에 발급받은 TMDB API 키를 입력하세요.
+API_KEY = os.getenv("TMDB_API_KEY")  # 여기에 발급받은 TMDB API 키를 입력하세요.
+print("API_KEY:", API_KEY)
 
 # CSV 파일 로드
 file_path = 'scripts/data/top_100_movies.csv'  # 파일 경로를 지정하세요.
@@ -21,7 +31,7 @@ def get_korean_title(movie_id):
         'language': 'ko-KR'
     }
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, verify=False)
         response.raise_for_status()
         data = response.json()
         return data.get('title', None)
